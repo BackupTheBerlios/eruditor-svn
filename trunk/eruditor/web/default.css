@@ -1,0 +1,69 @@
+body {
+	font-family: times new roman, times, serif;
+	font-size: 12pt;
+	color: #000;
+	background: #fff;
+	margin: 0 10%;
+	}
+
+a:link {
+	color: #00c;
+	background-color: transparent;
+	}
+a:visited {
+	color: #00c;
+	background-color: transparent;
+	}
+a:active {
+	color: #a00;
+	background-color: transparent;
+	}
+a:hover {
+	color: #a00;
+	background-color: transparent;
+	}
+
+h1 {
+	font-size: 180%;
+	}
+h1.title {
+	font-family: times new roman, times, serif;
+	font-size: 200%;
+	text-align: center;
+	margin: 1em 0 0;
+	}
+h2 {
+	font-size: 150%;
+	}
+h2.subtitle {
+	font-size: 150%;
+	font-style: italic;
+	text-align: center;
+	margin: 0 0 1em;
+	}
+h3 {
+	font-size: 120%;
+	}
+h1, h2, h3 {
+	font-family: times new roman, times, serif;
+	font-weight: bold;
+	color: #000;
+	background-color: transparent;
+	}
+
+th.docinfo-name {
+	text-align: left;
+	}
+
+dt {
+	font-weight: bold;
+	}
+
+img {
+	border: 0
+	}
+
+.center {
+	text-align: center;
+	}
+

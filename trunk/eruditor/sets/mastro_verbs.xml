@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lesson card-type="Greek" eruditor-version="1.0" title="Mastronarde Verbs">
+  <description>
+    All verbs, including principle parts, from Mastronarde's Introduction to Ancient Greek.
+  </description>
+  <notes>
+    In the process of entering data.
+  </notes>
+  <cards>
+    <card section="19">
+      <front count="0">
+        a)gge/llw
+      </front>
+      <middle count="0">
+        a)ggele/w, h)/ggeila, h)/ggelka, h)/ggelmai, h)gge/lqhn
+      </middle>
+      <back count="1" learned="2005 3 28 21 51 25">
+        bear a message, announce
+      </back>
+    </card>
+    <card section="28">
+      <front count="0">
+        a)gnoe/w
+      </front>
+      <middle count="0">
+        a)gnoh/sw, h)gno/hsa, h)gno/hka, h)gno/hmai, h)gnoh/qhn
+      </middle>
+      <back count="1" learned="2005 3 28 21 51 26">
+        not perceive, be unaware of
+      </back>
+    </card>
+    <card section="8">
+      <front count="0">
+        a)/gw
+      </front>
+      <middle count="0">
+        a)/cw, h)/gagon, h)=xa, h)=gmai, h)/xqhn
+      </middle>
+      <back count="1" learned="2005 3 28 21 51 26">
+        lead, carry
+      </back>
+    </card>
+    <card section="13">
+      <front count="0">
+        a)dike/w
+      </front>
+      <middle count="0">
+        a)dikh/sw, h)di/khsa, h)di/khka, h)di/khmai, h)dikh/qhn
+      </middle>
+      <back count="1" learned="2005 3 28 21 51 26">
+        be unjust, do wrong
+      </back>
+    </card>
+    <card section="38">
+      <front count="0">
+        a(qroi/zw
+      </front>
+      <middle count="0">
+        a(qroi/sw, h(/qroisa, h(/qroika, h(/qroismai, h(qroi/sqhn
+      </middle>
+      <back count="1" learned="2005 3 28 21 51 27">
+        gather together
+      </back>
+    </card>
+    <card section="13">
+      <front count="0">
+        ai(re/w
+      </front>
+      <middle count="0">
+        ai(rh/sw, ei(=lon, h(/|rhka, h(/|rhmai, h(|re/qhn
+      </middle>
+      <back count="1" learned="2005 3 28 21 51 27">
+        take, seize; (mid.) choose, elect
+      </back>
+    </card>
+    <card section="11">
+      <front count="0">
+        ai)sqa/nomai
+      </front>
+      <middle count="0">
+        ai)sqh/somai, h)|sqo/mhn, ---, h)/|sqhmai, ---
+      </middle>
+      <back count="0">
+        perceive, understand
+      </back>
+    </card>
+  </cards>
+</lesson>

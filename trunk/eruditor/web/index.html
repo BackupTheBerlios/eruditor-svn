@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.3.7: http://docutils.sourceforge.net/" />
+<title>ērudītor</title>
+<meta name="author" content="Alexander Lee &lt;alexlee (at) uchicago (dot) edu&gt;" />
+<meta name="date" content="20050328" />
+<link rel="stylesheet" href="default.css" type="text/css" />
+</head>
+<body>
+<div class="document" id="rud-tor">
+<h1 class="title">ērudītor</h1>
+<h2 class="subtitle" id="a-vocabulary-training-tool">A vocabulary training tool</h2>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>Alexander Lee &lt;alexlee (at) uchicago (dot) edu&gt;</td></tr>
+<tr><th class="docinfo-name">Version:</th>
+<td>0.1</td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>20050328</td></tr>
+</tbody>
+</table>
+<p><strong>Contents:</strong> <a class="reference" href="#introduction">Introduction</a> | <a class="reference" href="#how-it-works">How it works</a> | <a class="reference" href="#getting-started">Getting started</a> |
+<a class="reference" href="#todo-list">Todo List</a> | <a class="reference" href="#help-wanted">Help Wanted</a> | <a class="reference" href="#for-developers">For Developers</a> | <a class="reference" href="#licensing">Licensing</a></p>
+<div class="section" id="introduction">
+<h1><a name="introduction">Introduction</a></h1>
+<p><strong>ērudītor</strong> is a card-based learning system, intended to help students of
+the Classics work on their Greek and Latin vocabulary. This project was
+inspired by and closely resembles <a class="reference" href="http://pauker.sourceforge.net/">Pauker</a>, but it is implemented in a
+different language and toolkit, and it has special features for
+inputting Greek and Latin cards.</p>
+<p>ērudītor is <a class="reference" href="http://www.fsf.org/licensing/essays/free-sw.html">free software</a>, licensed under the GNU General Public
+License. See the <a class="reference" href="#licensing">licensing</a> section for more information.</p>
+<p>Here are some <a class="reference" href="shots.html">screenshots</a>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="how-it-works">
+<h1><a name="how-it-works">How it works</a></h1>
+<div class="section" id="lessons">
+<h2><a name="lessons">Lessons</a></h2>
+<p>Cards are organized into <em>lessons</em>. Each lesson contains a library of
+cards. These are organized into various <em>piles</em>, or <em>stacks</em>:</p>
+<ol class="arabic simple">
+<li><em>summary</em> – All of the cards</li>
+<li><em>unlearned</em> – Cards that you don't yet know</li>
+<li><em>ultrashort</em> – (Used when learning cards: ultra-shortterm memory)</li>
+<li><em>shortterm</em> – (Used when learning cards: shortterm memory)</li>
+<li><em>learnedN</em> – Stacks of learned cards. There can be several levels,
+depending on how many times you've gone over a card.</li>
+</ol>
+<p>As you learn cards, they move between the various stacks. Also, after a
+certain amount of time learned cards eventually <em>expire</em>; that is,
+you'll have to test yourself to see if you still remember them.</p>
+</div>
+<div class="section" id="cards">
+<h2><a name="cards">Cards</a></h2>
+<p>Each <em>card</em> has three sides:</p>
+<ol class="arabic simple">
+<li><em>front</em> – the head word / dictionary entry</li>
+<li><em>middle</em> – principle parts (for verbs); genitive sg and gender (for
+nouns); etc.</li>
+<li><em>back</em> – the definition or meaning</li>
+</ol>
+<p>The front and middle sides are displayed in the lesson's language, while
+the back is in English.</p>
+<p>Additionally, there's an optional <em>section</em> entry, which lets you
+associate for instance a textbook unit number or classification (this is
+helpful when sorting lists).</p>
+</div>
+<div class="section" id="language-support">
+<h2><a name="language-support">Language support</a></h2>
+<p>Currently, there is built-in support for three types of lessons: (1)
+Greek, (2) Latin, and (3) Unicode/Plain. Some notes on each:</p>
+<blockquote>
+<p><strong>Greek</strong> lessons use the <a class="reference" href="http://www.tlg.uci.edu/">TLG</a>'s <a class="reference" href="http://www.tlg.uci.edu/BetaCode.html">Beta Code</a> encoding scheme, with
+some modifications: (a) Lower-case characters represent lower-case
+letters, (b) You don't need the asterisk (*) before capital letters
+– just precede the capital letter with your diacritics. Some
+examples:</p>
+<blockquote>
+<div class="line-block">
+<div class="line">poli_/ths = πολίτης [ῑ]</div>
+<div class="line">)Aqhnai=os = Ἀθηναῖος</div>
+<div class="line">Ai)/guptos = Αἴγυπτος</div>
+<div class="line">)Ai+dwneu/s = Ἀϊδωνεύς</div>
+</div>
+</blockquote>
+<p><strong>Latin</strong> lessons use a basic method for representing long vowels:
+they are marked with a capital. (Unfortunately, this may interefere
+with real capitals that you might want in your cards. If this is a
+big deal, then use the Unicode/Plain method described below.) An
+example:</p>
+<blockquote>
+<div class="line-block">
+<div class="line">ErudItor = ērudītor</div>
+</div>
+</blockquote>
+<p><strong>Unicode</strong> (or <em>Plain</em>) lessons just have plain text that isn't
+interpreted or modified. Use this if you already have ways of
+entering non-Latin characters:</p>
+<blockquote>
+<div class="line-block">
+<div class="line">Ἀθηναῖος = Ἀθηναῖος</div>
+<div class="line">русский = русский </div>
+</div>
+</blockquote>
+</blockquote>
+<p>There can be any number of lesson types, depending on what you are
+learning. It's just a matter of people programming the support. See the
+<a class="reference" href="#help-wanted">Help Wanted</a> section below.</p>
+<blockquote>
+<em>Tip</em> The character translations (such as with Greek and Latin) are
+applied to the front and middle of cards, but not the backs. In the
+text for the front or middle, text between &lt;angle brackets&gt; doesn't
+get processed.</blockquote>
+</div>
+<div class="section" id="learning-process">
+<h2><a name="learning-process">Learning process</a></h2>
+<p>Similar to other card-based training software, ērudītor employs the
+Leitner training system. The cards are organized into stacks, based on
+whether or not you know them, and how many times you've correctly
+answered them.</p>
+</div>
+<div class="section" id="alternate-focus">
+<h2><a name="alternate-focus">Alternate focus</a></h2>
+<p>Since each card has three sides, the student has three possible targets
+when learning. S/he can choose to focus on learning the backs
+(word → definition), the fronts (definition → word), or the middles
+(word+definition → extra info).</p>
+<p>The ability to study the middles can be really helpful. This way the
+student can learn such important bits as:</p>
+<ol class="arabic simple">
+<li>for <em>nouns</em>: gen sg, gender</li>
+<li>for <em>adjectives</em>: gender endings for two or three termination</li>
+<li>for <em>verbs</em>: principle parts</li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="getting-started">
+<h1><a name="getting-started">Getting started</a></h1>
+<div class="section" id="system-requirements">
+<h2><a name="system-requirements">System requirements</a></h2>
+<p>ērudītor should run on any operating system that supports Python and
+wxPython. This encompasses a wide range of platforms, including:</p>
+<ul class="simple">
+<li>GNU/Linux (all distributions; the author likes <a class="reference" href="http://www.ubuntu.com/">Ubuntu</a> and
+<a class="reference" href="http://www.debian.org/">Debian GNU/Linux</a>)</li>
+<li>NetBSD, FreeBSD, etc.</li>
+<li>Windows 2000/XP</li>
+<li>Mac OS X (10.3 and up)</li>
+</ul>
+<p>Note that due to lack of proper Unicode support, Mac OS X 10.2 and lower
+are not supported.</p>
+</div>
+<div class="section" id="download">
+<h2><a name="download">Download</a></h2>
+<p>Releases are available at
+<a class="reference" href="http://developer.berlios.de/project/showfiles.php?group_id=3469">http://developer.berlios.de/project/showfiles.php?group_id=3469</a>.</p>
+<p>This project is stored in a <a class="reference" href="http://subversion.tigris.org/">Subversion</a> repository. For more info see
+<a class="reference" href="http://developer.berlios.de/svn/?group_id=3469">http://developer.berlios.de/svn/?group_id=3469</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2><a name="installation">Installation</a></h2>
+<div class="section" id="ubuntu-and-debian">
+<h3><a name="ubuntu-and-debian">Ubuntu and Debian</a></h3>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">libwxgtk2.5.3-python</span> <span class="pre">python-reportlab</span></tt></p>
+<p>Unpack <tt class="docutils literal"><span class="pre">eruditor-X.X.tar.gz</span></tt> into an appropriate place (in your home
+folder, or in <tt class="docutils literal"><span class="pre">/usr/local</span></tt>), then run <tt class="docutils literal"><span class="pre">python</span> <span class="pre">Eruditor.py</span></tt>.</p>
+<p>It's just that easy.</p>
+</div>
+<div class="section" id="other-unix-linux-bsds">
+<h3><a name="other-unix-linux-bsds">Other UNIX (Linux, BSDs)</a></h3>
+<p>First you'll need to get Python (<a class="reference" href="http://www.python.org/">http://www.python.org/</a>). Most systems
+should already have it installed, but if not, or if you have a version
+before 2.4 installed, you'll need to install or upgrade.</p>
+<p>You'll also need wxPython (<a class="reference" href="http://wxpython.org/">http://wxpython.org/</a>).</p>
+<p>And if you want the PDF Study List functionality (under development),
+then you should also download and install <tt class="docutils literal"><span class="pre">ReportLab_1_20.tgz</span></tt> from
+<a class="reference" href="http://www.reportlab.org/downloads.html">http://www.reportlab.org/downloads.html</a>.</p>
+<blockquote>
+<strong>NB</strong> As always, Linux users should first try their distribution's
+package management system. BSD users should use <tt class="docutils literal"><span class="pre">ports</span></tt>.</blockquote>
+<p>Unpack <tt class="docutils literal"><span class="pre">eruditor-X.X.tar.gz</span></tt> into an appropriate place (in your home
+folder, or in <tt class="docutils literal"><span class="pre">/usr/local</span></tt>), then run <tt class="docutils literal"><span class="pre">python</span> <span class="pre">Eruditor.py</span></tt>.</p>
+</div>
+<div class="section" id="mac-os-x">
+<h3><a name="mac-os-x">Mac OS X</a></h3>
+<p>Again, only versions 10.3 and higher are supported. Starting with
+version 10.3, a suitable build of Python is included in the operating
+system. So you'll just need to get the wxPython support:
+<a class="reference" href="http://wxpython.org/download.php#binaries">http://wxpython.org/download.php#binaries</a></p>
+<p>And scroll down to Mac OS X, get the <tt class="docutils literal"><span class="pre">osx-unicode</span></tt> package from the
+&quot;Panther&quot; column.</p>
+<p>Unpack <tt class="docutils literal"><span class="pre">eruditor-X.X.zip</span></tt> into an appropriate place (such as
+<tt class="docutils literal"><span class="pre">/Applications</span></tt> or in your home folder), then double-click on
+<tt class="docutils literal"><span class="pre">Eruditor.py</span></tt>.</p>
+</div>
+<div class="section" id="windows-2000-xp">
+<h3><a name="windows-2000-xp">Windows 2000/XP</a></h3>
+<p>Download and run the &quot;Python 2.4 Windows installer&quot;
+(<a class="reference" href="http://www.python.org/download/">http://www.python.org/download/</a>).</p>
+<p>For wxPython, go to <a class="reference" href="http://wxpython.org/download.php#binaries">http://wxpython.org/download.php#binaries</a> and get
+<tt class="docutils literal"><span class="pre">win32-unicode</span></tt> from the &quot;Python 2.4&quot; column.</p>
+<p>And optionally, get <tt class="docutils literal"><span class="pre">ReportLab_1_20.zip</span></tt> from
+<a class="reference" href="http://www.reportlab.org/downloads.html">http://www.reportlab.org/downloads.html</a>.</p>
+<p>Unpack <tt class="docutils literal"><span class="pre">eruditor-X.X.zip</span></tt> into an appropriate place (such as
+<tt class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\</span></tt>, or your home folder, or your desktop), then
+double-click on <tt class="docutils literal"><span class="pre">Eruditor.py</span></tt>.</p>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="todo-list">
+<h1><a name="todo-list">Todo List</a></h1>
+<p>The following features are being worked on.</p>
+<div class="section" id="export">
+<h2><a name="export">Export</a></h2>
+<ol class="arabic simple">
+<li>PDF study sheet <a class="footnote-reference" href="#id2" id="id1" name="id1">[1]</a></li>
+<li>Plain text study sheet</li>
+<li>Text file (tab-delim, CSV, etc)</li>
+</ol>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1" name="id2">[1]</a></td><td>Printable worksheet of 'active' words. Program will randomize active
+words list, then generate a PDF that can be folded up for easy study
+on-the-go.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="import">
+<h2><a name="import">Import</a></h2>
+<ol class="arabic simple">
+<li>Pauker XML file format</li>
+<li>Text file (tab-delim, CSV, etc)</li>
+</ol>
+</div>
+<div class="section" id="preferences">
+<h2><a name="preferences">Preferences</a></h2>
+<ol class="arabic simple">
+<li>Default lesson type</li>
+<li>Font selection</li>
+<li>Working directories</li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="help-wanted">
+<h1><a name="help-wanted">Help Wanted</a></h1>
+<p>I would appreciate help in any of the following forms:</p>
+<ul class="simple">
+<li><em>Bug testing</em>. This is fairly new software. I wrote the bulk of it
+over spring break, 20050320–26, when I had some spare time.</li>
+<li><em>Comments, feature requests, and suggestions</em>. I am less of an
+interface designer than a programmer, so I bet people can think up
+some nice interface improvements, at least.</li>
+<li><em>Programming help</em>. If you'd really like to get involved, feel free to
+email me. I wouldn't mind sharing the joy. The code's out there, so
+havealook.</li>
+</ul>
+<p>Also, I think it would be great if there were a standard library of
+lessons that students could download and use. So far I've thought of:</p>
+<dl class="docutils">
+<dt>GREEK</dt>
+<dd><ul class="first last simple">
+<li>Vocab from Mastronarde's <em>Introduction to Attic Greek</em>. Done
+by-the-unit. Separate list for verbs with their principle parts.</li>
+<li>Campbell's <em>Classical Greek Prose: A Basic Vocabulary</em>. (Copyright
+issues? Email me if you have any ideas...)</li>
+<li>Verb list from Smyth.</li>
+<li>Word list from Sidgwick or some other prose comp book.</li>
+</ul>
+</dd>
+<dt>LATIN</dt>
+<dd><ul class="first last simple">
+<li>Wheelock? Cambridge Latin Course? Do these by-the-unit.</li>
+<li>Word list from <em>Bradley's Arnold</em>. This could help immensely for
+students taking prosecomp.</li>
+<li>Latin word lists assembled in part by H. Pinkster (don't know the
+title; will look into this)</li>
+</ul>
+</dd>
+<dt>GERMAN</dt>
+<dd><ul class="first last simple">
+<li>Jannach &amp; Korb's <em>German for Reading Knowledge</em>. I need to take my
+reading exam soon, so I'm definitely working on this.</li>
+</ul>
+</dd>
+</dl>
+<p>If anyone's willing to work on these, please email me. I'll post contact
+info here so people can collaborate on the various lessons.  Ideas about
+efficient importing methods would be nice, too. I'm planning to at least
+have importing of tab-delimited and CSV files – eventually.</p>
+<p><em>In a more ideal world these lists would also take into account vowel
+length. So to anyone putting together lessons out there: if you can mark
+the long vowels, please do so!</em></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="for-developers">
+<h1><a name="for-developers">For Developers</a></h1>
+<div class="section" id="language-toolkits-platform">
+<h2><a name="language-toolkits-platform">Language, toolkits, platform</a></h2>
+<p>ērudītor is written in Python, using the wxPython toolkit. I use <a class="reference" href="http://www.vim.org/">vim</a> to
+edit the source and <a class="reference" href="http://wxglade.sourceforge.net/">wxGlade</a> to build the interface.</p>
+<p>My development system is running <a class="reference" href="http://www.ubuntu.com/">Ubuntu</a> (variant of <a class="reference" href="http://www.debian.org/">Debian GNU/Linux</a>).</p>
+<p>Email me if you want more details or would like to help out.</p>
+<p>Also, check out the <a class="reference" href="http://developer.berlios.de/projects/eruditor/">berliOS project page</a>.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="licensing">
+<h1><a name="licensing">Licensing</a></h1>
+<p>ērudītor is licensed under the <a class="reference" href="http://www.fsf.org/">GPL</a>:</p>
+<blockquote>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</p>
+</blockquote>
+<hr class="docutils" />
+<p>©2005 Alexander Lee ~ <a class="reference" href="http://validator.w3.org/check?uri=referer">valid XHTML</a> ~ <a class="reference" href="http://jigsaw.w3.org/css-validator/check/referer">valid CSS</a></p>
+<div class="image image-reference"><a class="reference" href="http://developer.berlios.de"><img alt="BerliOS Developer Logo" height="32" src="http://developer.berlios.de/bslogo.php?group_id=3469" width="124" /></a></div>
+</div>
+</div>
+</body>
+</html>

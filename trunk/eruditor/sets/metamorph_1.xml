@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lesson card-type="Latin" eruditor-version="1.0" title="Metamorphoses, Book I">
+  <description>
+    Ovid, Metamorphoses. Book I.
+  </description>
+  <notes>
+    Lines 1--31
+  </notes>
+  <cards>
+    <card>
+      <front count="0">
+        indIgestus
+      </front>
+      <middle count="0">
+        -a, um
+      </middle>
+      <back count="0">
+        disordered, confused, unarranged
+      </back>
+    </card>
+    <card>
+      <front count="0">
+        iners
+      </front>
+      <middle count="0">
+        -ertis
+      </middle>
+      <back count="0">
+        untrained, unskillful; idle, sluggish
+      </back>
+    </card>
+    <card>
+      <front count="0">
+        innAbilis
+      </front>
+      <middle count="0">
+        -e
+      </middle>
+      <back count="0">
+        that cannot be swimmed in
+      </back>
+    </card>
+    <card>
+      <front count="0">
+        spissus
+      </front>
+      <middle count="0">
+        -a, -um
+      </middle>
+      <back count="0">
+        close, dense, thick; slow, difficult
+      </back>
+    </card>
+    <card>
+      <front count="0">
+        acervus
+      </front>
+      <middle count="0">
+        -i, m
+      </middle>
+      <back count="0">
+        a heap, multitude
+      </back>
+    </card>
+    <card>
+      <front count="0">
+        ligo
+      </front>
+      <middle count="0">
+        -are
+      </middle>
+      <back count="0">
+        bind, tie; connect, unite
+      </back>
+    </card>
+    <card>
+      <front count="0">
+        coerceo
+      </front>
+      <middle count="0">
+        -Ere
+      </middle>
+      <back count="0">
+        enclose, shut in; limit, confine
+      </back>
+    </card>
+  </cards>
+</lesson>

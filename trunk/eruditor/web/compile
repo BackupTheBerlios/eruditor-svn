@@ -1,0 +1,2 @@
+#!/bin/sh
+rest2html index.txt index.html
