@@ -20,6 +20,7 @@
 
 import wx
 
+import Config
 import AboutDialog
 import PropertiesDialog
 import TrainerDialog
@@ -68,12 +69,13 @@ class MainFrame(wx.Frame):
         self.menuItemQuit = wx.MenuItem(self.menuLesson, wx.NewId(), "&Quit", "Goodbye!", wx.ITEM_NORMAL)
         self.menuLesson.AppendItem(self.menuItemQuit)
         self.menuBar.Append(self.menuLesson, "&Lesson")
+        self.menuAction = wx.Menu()
+        self.menuItemLearn = wx.MenuItem(self.menuAction, wx.NewId(), "&Learn!", "", wx.ITEM_NORMAL)
+        self.menuAction.AppendItem(self.menuItemLearn)
+        self.menuItemReview = wx.MenuItem(self.menuAction, wx.NewId(), "&Review", "", wx.ITEM_NORMAL)
+        self.menuAction.AppendItem(self.menuItemReview)
+        self.menuBar.Append(self.menuAction, "&Action")
         self.menuTools = wx.Menu()
-        self.menuItemLearn = wx.MenuItem(self.menuTools, wx.NewId(), "&Learn!", "", wx.ITEM_NORMAL)
-        self.menuTools.AppendItem(self.menuItemLearn)
-        self.menuItemReview = wx.MenuItem(self.menuTools, wx.NewId(), "&Review", "", wx.ITEM_NORMAL)
-        self.menuTools.AppendItem(self.menuItemReview)
-        self.menuTools.AppendSeparator()
         self.menuItemImport = wx.MenuItem(self.menuTools, wx.NewId(), "&Import Cards", "Import cards from another card set or lesson", wx.ITEM_NORMAL)
         self.menuTools.AppendItem(self.menuItemImport)
         self.menuItemExport = wx.MenuItem(self.menuTools, wx.NewId(), "&Export Cards", "", wx.ITEM_NORMAL)
@@ -113,6 +115,7 @@ class MainFrame(wx.Frame):
         self.buttonAddCards = wx.Button(self.mainPanel, wx.ID_ADD, "Add")
         self.buttonExpCards = wx.Button(self.mainPanel, wx.NewId(), "Expire")
         self.buttonDelCards = wx.Button(self.mainPanel, wx.ID_REMOVE, "Remove")
+        self.buttonShuffleCards = wx.Button(self.mainPanel, wx.NewId(), "Shuffle")
         self.buttonLearnCards = wx.Button(self.mainPanel, wx.NewId(), "Learn!")
         self.buttonReviewCards = wx.Button(self.mainPanel, wx.NewId(), "Review")
 
@@ -157,7 +160,8 @@ class MainFrame(wx.Frame):
         sizerButtons.Add(self.buttonExpCards, 0, wx.RIGHT|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add(self.buttonDelCards, 0, wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add((20, 20), 1, wx.EXPAND|wx.FIXED_MINSIZE, 0)
-        sizerButtons.Add(self.buttonLearnCards, 0, wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerButtons.Add(self.buttonShuffleCards, 0, wx.FIXED_MINSIZE, 0)
+        sizerButtons.Add(self.buttonLearnCards, 0, wx.LEFT|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add(self.buttonReviewCards, 0, wx.LEFT|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerSplit.Add(sizerButtons, 0, wx.ALL|wx.EXPAND, 5)
         self.mainPanel.SetAutoLayout(True)
@@ -184,10 +188,12 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnMenuItemSaveas, self.menuItemSaveas)
         self.Bind(wx.EVT_MENU, self.OnMenuItemClose, self.menuItemClose)
         self.Bind(wx.EVT_MENU, self.OnMenuItemProps, self.menuItemProps)
+        self.Bind(wx.EVT_MENU, self.OnMenuItemPrefs, self.menuItemPrefs)
         self.Bind(wx.EVT_MENU, self.OnMenuItemQuit, self.menuItemQuit)
 
         self.Bind(wx.EVT_MENU, self.OnButtonLearn, self.menuItemLearn)
         self.Bind(wx.EVT_MENU, self.OnButtonReview, self.menuItemReview)
+
         #self.Bind(wx.EVT_MENU, self.OnButtonImport, self.menuItemImport)
         self.Bind(wx.EVT_MENU, self.OnButtonExport, self.menuItemExport)
 
@@ -205,6 +211,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnButtonAdd, self.buttonAddCards)
         self.Bind(wx.EVT_BUTTON, self.OnButtonExp, self.buttonExpCards)
         self.Bind(wx.EVT_BUTTON, self.OnButtonDel, self.buttonDelCards)
+        self.Bind(wx.EVT_BUTTON, self.OnButtonShuffle, self.buttonShuffleCards)
         self.Bind(wx.EVT_BUTTON, self.OnButtonLearn, self.buttonLearnCards)
         self.Bind(wx.EVT_BUTTON, self.OnButtonReview, self.buttonReviewCards)
 
@@ -323,9 +330,20 @@ class MainFrame(wx.Frame):
             dlg.Destroy()
 
     def OnMenuItemPrefs(self, event):
-        """ FIXME -- using now for reloading of modules """
-        reload(TrainerDialog)
-        print "Reloaded module: TrainerDialog"
+        # FIXME currently only does font selection
+        fdata = wx.FontData()
+        fdata.SetInitialFont(Config.GetFont())
+        dlg = wx.FontDialog(self, fdata)
+        try:
+            if dlg.ShowModal() == wx.ID_OK:
+                fdata = dlg.GetFontData()
+                font = fdata.GetChosenFont()
+                Config.SetFont(font.GetFaceName(),
+                        font.GetStyle(),
+                        font.GetWeight(),
+                        font.GetPointSize())
+        finally:
+            dlg.Destroy()
 
     def OnButtonAdd(self, event):
         dlg = AddDialog.AddDialog(self, lesson=self.lesson)
@@ -356,6 +374,10 @@ class MainFrame(wx.Frame):
 
         self.lesson.AnalyzeCards()
         self.pilesPanel.Update(self.lesson)
+
+    def OnButtonShuffle(self, event):
+        self.lesson.ShuffleCards()
+        self.cardList.Refresh()
 
     def OnButtonLearn(self, event):
         # Check first to see if this is even necessary
@@ -394,10 +416,20 @@ class MainFrame(wx.Frame):
         if count == 0: return
 
         cards = self.cardList.GetSelectedCards()
-        outfile = open('/tmp/export.txt', 'w') # FIXME
+        outfile = open('/tmp/export.tex', 'w') # FIXME
+        outfile.write( """\\documentclass[twocolumn,landscape]{article}
+\\usepackage[ibycus,english]{babel}
+\\begin{document}
+\\subsection*{%s}
+\\begin{description}
+""" % self.lesson.title )
         for c in cards:
-            outfile.write("%s %s\t%s\n" % \
-                    (c.GetText(FRONT), c.GetText(MIDDLE), c.GetText(BACK)))
+            outfile.write("\\item[%s %s] %s\n" % \
+                (c.GetTextRaw(FRONT), c.GetTextRaw(MIDDLE), c.GetText(BACK)))
+        outfile.write( r"""\end{description}
+
+\end{document}
+""" )
         outfile.close()
 
     # Utility methods

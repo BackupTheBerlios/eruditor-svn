@@ -22,6 +22,8 @@ import wx
 
 import datetime
 
+import Config
+
 from Globals import *
 
 SHOWSEC = 18 # sec
@@ -54,16 +56,18 @@ class TrainerDialog(wx.Dialog):
         self.__do_layout()
         # end wxGlade
 
+        font = Config.GetFont()
+        self.textFront.SetFont(font)
+        self.textMiddle.SetFont(font)
+        self.textBack.SetFont(font)
+
     def __set_properties(self):
         # begin wxGlade: TrainerDialog.__set_properties
         self.SetTitle("Card Trainer")
         self.labelMessage.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.textFront.SetSize((300,60))
-        self.textFront.SetFont(wx.Font(14, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, ""))
         self.textMiddle.SetSize((300, 60))
-        self.textMiddle.SetFont(wx.Font(14, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, ""))
         self.textBack.SetSize((300,60))
-        self.textBack.SetFont(wx.Font(14, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, ""))
         self.labelTimerShow.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.labelTimerShow.SetToolTipString("Timer for ultra-shortterm memory")
         self.labelTimerTest.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))

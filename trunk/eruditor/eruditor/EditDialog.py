@@ -20,6 +20,8 @@
 
 import wx
 
+import Config
+
 from Globals import *
 
 # begin wxGlade: dependencies
@@ -49,6 +51,11 @@ class EditDialog(wx.Dialog):
         self.__set_properties()
         self.__do_layout()
         # end wxGlade
+
+        font = Config.GetFont()
+        self.textFront.SetFont(font)
+        self.textMiddle.SetFont(font)
+        self.textBack.SetFont(font)
 
         self._Populate()
         self.Bind(wx.EVT_BUTTON, self.OnButtonOk, self.buttonOk)

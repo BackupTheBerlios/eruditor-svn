@@ -24,6 +24,7 @@
 
 import xml.dom.minidom
 import datetime
+import random
 
 import Card
 import Types
@@ -246,13 +247,22 @@ class Lesson(object):
         return cards
 
     def AddCard(self, card, analyze=True):
+        # FIXME don't do a full analysis, which is O(n); rather, do an in-place
+        # analysis here
         self.stacks[SUMMARY].append(card)
         if analyze: self.AnalyzeCards()
         self.dirty = True
 
     def DelCard(self, card, analyze=True):
+        # FIXME see AddCard
         self.stacks[SUMMARY].remove(card)
         if analyze: self.AnalyzeCards()
+        self.dirty = True
+
+    def ShuffleCards(self):
+        """ Randomizes the stack of cards """
+        random.shuffle(self.stacks[SUMMARY])
+        self.AnalyzeCards()
         self.dirty = True
 
     def AnalyzeCards(self):
@@ -280,11 +290,8 @@ class Lesson(object):
                 self.stacks[LEARNED[count - 1]].append(c)
 
     def Breakdown(self, stackname):
-        return self._Breakdown(self.stacks[stackname])
-
-    def _Breakdown(self, stack):
         """ Do a breakdown of the given stack """
-
+        stack = self.stacks[stackname]
         now = datetime.datetime.now()
         unl, lrn, exp = 0, 0, 0
 

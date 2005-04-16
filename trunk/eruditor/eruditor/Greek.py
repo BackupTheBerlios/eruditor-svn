@@ -77,7 +77,7 @@ class Convertor(UserDict):
         
         # Note the first entry -- this lets us specially handle any part that
         # comes between angle brackets. Cf note in __call__.
-        tmp = "(<(.*?)>|%s)" % "|".join(map(re.escape, keys))
+        tmp = "({(.*?)}|%s)" % "|".join(map(re.escape, keys))
         self.re = tmp
         self.regex = re.compile(self.re)
     
@@ -86,7 +86,7 @@ class Convertor(UserDict):
 
         # Grab the matched string, get the related info from the dict.
         matchstr = mo.string[mo.start():mo.end()]
-        if matchstr[0] == '<' and matchstr[-1] == '>':
+        if matchstr[0] == '{' and matchstr[-1] == '}':
             # It's that special case mentioned above in _compile; strip the
             # angle brackets and return the string without changes.
             unichr = matchstr[1:-1]

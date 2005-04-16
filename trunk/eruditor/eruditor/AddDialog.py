@@ -20,6 +20,7 @@
 
 import wx
 
+import Config
 import Card
 
 from Globals import *
@@ -36,7 +37,7 @@ class AddDialog(wx.Dialog):
         self.parent = args[0]
 
         # begin wxGlade: AddDialog.__init__
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE
+        kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
         self.labelFront = wx.StaticText(self, -1, "Front")
         self.textFront = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE)
@@ -53,6 +54,11 @@ class AddDialog(wx.Dialog):
         self.__do_layout()
         # end wxGlade
 
+        font = Config.GetFont()
+        self.textFront.SetFont(font)
+        self.textMiddle.SetFont(font)
+        self.textBack.SetFont(font)
+
         self.Bind(wx.EVT_BUTTON, self.OnButtonAdd, self.buttonAdd)
         self.Bind(wx.EVT_BUTTON, self.OnButtonClose, self.buttonClose)
 
@@ -61,13 +67,10 @@ class AddDialog(wx.Dialog):
         self.SetTitle("Add Card")
         self.labelFront.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.textFront.SetSize((300,60))
-        self.textFront.SetFont(wx.Font(14, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, ""))
         self.labelMiddle.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.textMiddle.SetSize((300,60))
-        self.textMiddle.SetFont(wx.Font(14, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, ""))
         self.labelBack.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.textBack.SetSize((300,60))
-        self.textBack.SetFont(wx.Font(14, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, ""))
         self.labelSection.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.buttonAdd.SetDefault()
         # end wxGlade

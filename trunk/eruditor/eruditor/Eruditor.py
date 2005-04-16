@@ -21,9 +21,11 @@
 
 import wx
 from MainFrame import MainFrame
+import Config
 
 class Eruditor(wx.App):
     def OnInit(self):
+        Config.Initialize()
         wx.InitAllImageHandlers()
         mainFrame = MainFrame(None, -1, "")
         self.SetTopWindow(mainFrame)
