@@ -22,6 +22,7 @@
 #
 # Lesson stuff.
 
+import os.path
 import xml.dom.minidom
 import datetime
 import random
@@ -228,6 +229,14 @@ class Lesson(object):
     focus = property(GetFocus, SetFocus)
     """ Which side of the cards we are studying """
 
+    def GetBaseName(self):
+        if self.filename: return os.path.basename(self.filename)
+        else: return "Untitled"
+
+    def GetDirName(self):
+        if self.filename: return os.path.dirname(self.filename)
+        else: return ""
+
     def GetCardTotal(self):
         return len(self.stacks[SUMMARY])
 
@@ -257,12 +266,6 @@ class Lesson(object):
         # FIXME see AddCard
         self.stacks[SUMMARY].remove(card)
         if analyze: self.AnalyzeCards()
-        self.dirty = True
-
-    def ShuffleCards(self):
-        """ Randomizes the stack of cards """
-        random.shuffle(self.stacks[SUMMARY])
-        self.AnalyzeCards()
         self.dirty = True
 
     def AnalyzeCards(self):
@@ -305,3 +308,56 @@ class Lesson(object):
 
         return unl, lrn, exp
 
+    def ShuffleCards(self):
+        """ Randomizes the stack of cards """
+        random.shuffle(self.stacks[SUMMARY])
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def SortBySection(self):
+        self.stacks[SUMMARY].sort(self._cmp_section)
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def SortByFront(self):
+        self.stacks[SUMMARY].sort(self._cmp_front)
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def SortByMiddle(self):
+        self.stacks[SUMMARY].sort(self._cmp_middle)
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def SortByBack(self):
+        self.stacks[SUMMARY].sort(self._cmp_back)
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def SortByLearned(self):
+        self.stacks[SUMMARY].sort(self._cmp_learned)
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def SortByCount(self):
+        self.stacks[SUMMARY].sort(self._cmp_count)
+        self.AnalyzeCards()
+        self.dirty = True
+
+    def _cmp_section(self, c1, c2):
+        return cmp(c1.section, c2.section)
+
+    def _cmp_front(self, c1, c2):
+        return cmp(c1.GetTextRaw(FRONT), c2.GetTextRaw(FRONT))
+
+    def _cmp_middle(self, c1, c2):
+        return cmp(c1.GetTextRaw(MIDDLE), c2.GetTextRaw(MIDDLE))
+
+    def _cmp_back(self, c1, c2):
+        return cmp(c1.GetTextRaw(BACK), c2.GetTextRaw(BACK))
+
+    def _cmp_learned(self, c1, c2):
+        return cmp(c1.GetLearned(self.focus), c2.GetLearned(self.focus))
+
+    def _cmp_count(self, c1, c2):
+        return cmp(c1.GetCount(self.focus), c2.GetCount(self.focus))

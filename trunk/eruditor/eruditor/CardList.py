@@ -25,6 +25,7 @@
 import sys
 import wx
 
+import Config
 import EditDialog
 
 from Globals import *
@@ -55,9 +56,9 @@ class CardList(wx.ListCtrl):
         # Private fields and basic initialization
 
         self.__lesson = None
-        """ Which side to use when showing "learned" and "count" """
+        """ The lesson to display """
         self.__stackname = None
-        """ Which stack's cards will be displayed """
+        """ Name of stack whose cards will be displayed """
         self.__stack = None
         """ Quick reference to that stack """
         self.SetItemCount(0)
@@ -67,7 +68,6 @@ class CardList(wx.ListCtrl):
         red    = wx.Colour(255, 191, 191)
         green  = wx.Colour(191, 255, 191)
         blue   = wx.Colour(191, 191, 255)
-        attrfont = wx.Font(12, wx.ROMAN, wx.NORMAL, wx.NORMAL, 0, "")
 
         self.__unl_attr = wx.ListItemAttr()
         """ Row attribute for unlearned cards """
@@ -76,16 +76,24 @@ class CardList(wx.ListCtrl):
         self.__exp_attr = wx.ListItemAttr()
         """ Row attribute for expired cards """
 
-        self.__unl_attr.SetFont(attrfont)
+        # These are the default colors for the three types
         self.__unl_attr.SetBackgroundColour(red)
-        self.__lrn_attr.SetFont(attrfont)
         self.__lrn_attr.SetBackgroundColour(green)
-        self.__exp_attr.SetFont(attrfont)
         self.__exp_attr.SetBackgroundColour(blue)
+
+        self.SetFont(Config.GetFont())
 
         # Events
 
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnActivate, self)
+        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, self)
+
+    def SetFont(self, font):
+        """ Sets the font for the headings and rows """
+        wx.ListCtrl.SetFont(self, font)
+        self.__unl_attr.SetFont(font)
+        self.__lrn_attr.SetFont(font)
+        self.__exp_attr.SetFont(font)
 
     def OnGetItemText(self, item, col):
         """ Callback for showing list contents """
@@ -94,7 +102,7 @@ class CardList(wx.ListCtrl):
         elif col <= 3: return card.GetText(col-1) # FIXME hackish ... ?
         elif col == 4: return card.GetLearnedPretty(self.__lesson.focus)
         elif col == 5: return card.GetCountStr(self.__lesson.focus)
-        assert 0
+        assert False
 
     def OnGetItemAttr(self, item):
         """ Callback for showing list contents """
@@ -135,7 +143,7 @@ class CardList(wx.ListCtrl):
 
     def OnActivate(self, event):
         """ Handler for double-click or enter """
-        idx = event.m_itemIndex
+        idx = event.GetIndex() #event.m_itemIndex
         card = self.__stack[idx]
 
         dlg = EditDialog.EditDialog(self, card=card)
@@ -143,4 +151,15 @@ class CardList(wx.ListCtrl):
             dlg.ShowModal()
         finally:
             dlg.Destroy()
+
+    def OnColClick(self, event):
+        """ Handler for column sort (user click on header) """
+        col = event.GetColumn() #event.m_col
+        if col == 0: self.__lesson.SortBySection()
+        elif col == 1: self.__lesson.SortByFront()
+        elif col == 2: self.__lesson.SortByMiddle()
+        elif col == 3: self.__lesson.SortByBack()
+        elif col == 4: self.__lesson.SortByLearned()
+        elif col == 5: self.__lesson.SortByCount()
+        self.Refresh()
 

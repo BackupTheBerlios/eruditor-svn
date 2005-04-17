@@ -20,6 +20,8 @@
 
 import wx
 
+import os.path
+
 import Config
 import AboutDialog
 import PropertiesDialog
@@ -144,7 +146,6 @@ class MainFrame(wx.Frame):
         self.mainToolbar.Realize()
         self.labelLessonTitle.SetFont(wx.Font(16, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.labelLessonFocus.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        self.cardList.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
         # end wxGlade
 
     def __do_layout(self):
@@ -231,10 +232,9 @@ class MainFrame(wx.Frame):
         try:
             if dlg.ShowModal() == wx.ID_OK:
                 fullname = dlg.GetPath()
-                shortname = dlg.GetFilename()
                 self.lesson = Lesson.Lesson(filename=fullname)
                 self._LessonChanged()
-                self.UpdateStatus("Loaded %s" % self.lesson.filename)
+                self.UpdateStatus("Loaded %s" % self.lesson.GetBaseName())
         finally:
             dlg.Destroy()
 
@@ -243,7 +243,7 @@ class MainFrame(wx.Frame):
             return self.OnMenuItemSaveas(event)
         else:
             self.lesson.WriteXML()
-            self.UpdateStatus("Saved %s" % self.lesson.filename)
+            self.UpdateStatus("Saved %s" % self.lesson.GetBaseName())
             return wx.ID_OK
 
     def OnMenuItemSaveas(self, event):
@@ -254,11 +254,10 @@ class MainFrame(wx.Frame):
             rval = dlg.ShowModal()
             if rval == wx.ID_OK:
                 fullname = dlg.GetPath()
-                shortname = dlg.GetFilename()
                 self.lesson.filename = fullname
                 self.lesson.WriteXML()
                 self._LessonChanged()
-                self.UpdateStatus("Saved as %s" % self.lesson.filename)
+                self.UpdateStatus("Saved as %s" % self.lesson.GetBaseName())
         finally:
             dlg.Destroy()
         return rval
@@ -272,7 +271,7 @@ class MainFrame(wx.Frame):
                 if self.OnMenuItemSave(event) == wx.ID_CANCEL:
                     return # user cancelled save operation
 
-        oldname = self.lesson.filename
+        oldname = self.lesson.GetBaseName()
         self.lesson = Lesson.Lesson()
         self._LessonChanged()
         self.UpdateStatus("Closed %s" % oldname)
@@ -342,6 +341,7 @@ class MainFrame(wx.Frame):
                         font.GetStyle(),
                         font.GetWeight(),
                         font.GetPointSize())
+                self.cardList.SetFont(Config.GetFont())
         finally:
             dlg.Destroy()
 
@@ -438,7 +438,7 @@ class MainFrame(wx.Frame):
         """ Updates GUI elements with Lesson info. Called when lesson
         properties have changed or when a new lesson has been loaded. """
 
-        self.SetTitle((u'%s - %s') % (APPNAME, self.lesson.filename))
+        self.SetTitle((u'%s - %s') % (APPNAME, self.lesson.GetBaseName()))
         self.UpdateHeader(self.lesson.title, self.lesson.focus)
 
         self.cardList.lesson = self.lesson

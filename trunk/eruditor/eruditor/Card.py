@@ -35,16 +35,16 @@ class Card(object):
     """ Represents a single flash card. """
 
     def __init__(self, type, ft, fl, fx, mt, ml, mx, bt, bl, bx, section):
-        self.type = type
+        self.__type = type
         """ The type of card (i.e. language) being learned """
         self.section = section
         """ For organization """
-        self.update(ft, fl, fx, mt, ml, mx, bt, bl, bx)
+        self._Populate(ft, fl, fx, mt, ml, mx, bt, bl, bx)
 
     def __repr__(self):
         return "<Card %s>" % self.text[FRONT]
 
-    def update(self, ft, fl, fx, mt, ml, mx, bt, bl, bx):
+    def _Populate(self, ft, fl, fx, mt, ml, mx, bt, bl, bx):
         """ Set the text, learned-dates, and counts for all sides of the card
         """
         self.text = [ft, mt, bt]
@@ -56,14 +56,40 @@ class Card(object):
         self.expired = [False, False, False]
         """ Has the card expired? Start with dummy values """
 
+        self.cache = [ft, mt, bt]
+        """ Unicode representation of text on each side, used for special
+        encodings, like BetaCode Greek or special Latin. For instance, you'd
+        have:
+            self.text[FRONT] is 'amare'
+            self.cache[FRONT] is 'amāre'
+        The caching saves us all that text conversion when displaying, say, the
+        card list. """
+        self._GenCache()
+
+    def _GenCache(self):
+        """ (re)Generates cached text values """
+        self.cache[FRONT] = Types.Convert(self.type, self.text[FRONT])
+        self.cache[MIDDLE] = Types.Convert(self.type, self.text[MIDDLE])
+        self.cache[BACK] = self.text[BACK]
+
+    # Property: type
+    def SetType(self, type):
+        if self.__type != type:
+            self.__type = type
+            self._GenCache()
+    def GetType(self):
+        return self.__type
+    type = property(GetType, SetType)
+
     def SetText(self, side, text):
         assert side in (FRONT, MIDDLE, BACK)
         self.text[side] = text
+        if side == BACK: self.cache[side] = text
+        else: self.cache[side] = Types.Convert(self.type, text)
 
     def GetText(self, side):
         assert side in (FRONT, MIDDLE, BACK)
-        if side == BACK: return self.text[side]
-        else: return Types.Convert(self.type, self.text[side])
+        return self.cache[side]
 
     def GetTextRaw(self, side):
         assert side in (FRONT, MIDDLE, BACK)
@@ -87,9 +113,13 @@ class Card(object):
         self.learned[side] = None
         self.expired[side] = False
 
+    def GetLearnedRaw(self, side):
+        assert side in (FRONT, MIDDLE, BACK)
+        return self.learned[side]
+
     def GetLearned(self, side):
         assert side in (FRONT, MIDDLE, BACK)
-        if self.count[side] == 0: return None
+        if self.count[side] == 0: return ""
         else:
             dt = self.learned[side]
             return '%s %s %s %s %s %s' % \

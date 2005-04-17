@@ -30,7 +30,7 @@ class AboutDialog(wx.Dialog):
         wx.Dialog.__init__(self, *args, **kwds)
         self.aboutHeader = wx.StaticText(self, -1, "ērudītor")
         self.labelVersion = wx.StaticText(self, -1, "version 1.0")
-        self.aboutMessage = wx.StaticText(self, -1, "A vocabulary training program for Classicists.\nSupports Greek, Latin, and generic Unicode.\n\nImplemented in Python, using:\n  - wxPython: http://wxpython.org/\n  - wxGlade: http://wxglade.sourceforge.net/\nInspired by:\n  - Pauker: http://pauker.sourceforge.net/\n\nWritten by Alex Lee <alexlee@uchicago.edu>\nhttp://home.uchicago.edu/~alexlee/eruditor/")
+        self.aboutMessage = wx.StaticText(self, -1, "A vocabulary training program for Classicists.\nSupports Greek, Latin, and generic Unicode.\n\nImplemented in Python, using:\n  - wxPython: http://wxpython.org/\n  - wxGlade: http://wxglade.sourceforge.net/\nInspired by:\n  - Pauker: http://pauker.sourceforge.net/\n\nWritten by Alex Lee <alexlee@uchicago.edu>\nhttp://eruditor.berlios.de/")
         self.aboutBitmap = wx.StaticBitmap(self, -1, wx.Bitmap("img/gibbon.jpg", wx.BITMAP_TYPE_ANY))
         self.buttonOk = wx.Button(self, wx.ID_OK, "OK")
 
