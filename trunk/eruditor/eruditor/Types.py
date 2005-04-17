@@ -46,7 +46,7 @@ def GetConvertor(type):
     """ Returns the convertor for the specified type """
     # FIXME is this function even needed?
     try:
-        conv = _types[type]
+        conv = _types[type][0]
         return conv
     except KeyError:
         print "ERR: No such type registered!"
@@ -55,12 +55,20 @@ def GetConvertor(type):
 def Convert(type, text):
     """ Runs conversion of given type on the given text """
     try:
-        conv = _types[type]
+        conv = _types[type][0]
         return conv.Convert(text)
     except KeyError:
         print "ERR: No such type registered!"
         raise
 
+def Normalize(type, text):
+    """ Gets a plain cmp()-arable version of the text """
+    try:
+        norm = _types[type][1]
+        return norm.Convert(text)
+    except KeyError:
+        print "ERR: No such type registered!"
+        raise
 
 def RegisterType(typename):
     """ Registers the given type. A "modname".py file must exist, and it must
@@ -68,7 +76,8 @@ def RegisterType(typename):
     try:
         module = __import__(typename)
         conv = module.Convertor()
-        _types[typename] = conv
+        norm = module.Normalizer()
+        _types[typename] = (conv, norm)
     except ImportError:
         print "ERR: No such type found!"
         raise

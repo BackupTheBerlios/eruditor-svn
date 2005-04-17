@@ -23,6 +23,7 @@
 # Module to handle program configuration.
 
 import wx
+import os.path
 
 config = None
 
@@ -39,6 +40,7 @@ def Initialize():
 
     config = wx.Config("eruditor")
 
+    # Font settings
     face = config.Read("/font/face", defaultVal="Times New Roman")
     style = config.ReadInt("/font/style", defaultVal=wx.NORMAL)
     weight = config.ReadInt("/font/weight", defaultVal=wx.NORMAL)
@@ -70,4 +72,17 @@ def GetFont():
             False,
             config.Read("/font/face"))
     return font
+
+def SetLastDir(dir):
+    if os.path.exists(dir):
+        config.Write("/file/lastdir", dir)
+
+def GetLastDir():
+    dir = config.Read("/file/lastdir", defaultVal=".")
+
+    if os.path.exists(dir):
+        return dir
+    else:
+        config.Write("/file/lastdir", ".")
+        return "."
 

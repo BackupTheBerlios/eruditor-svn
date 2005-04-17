@@ -64,6 +64,9 @@ class Card(object):
             self.cache[FRONT] is 'amāre'
         The caching saves us all that text conversion when displaying, say, the
         card list. """
+        self.cmpcache = [ft, mt, bt]
+        """ A representation of the text that can be fed to cmp() for
+        comparison. This is useful for efficient and correct sorting. """
         self._GenCache()
 
     def _GenCache(self):
@@ -71,6 +74,9 @@ class Card(object):
         self.cache[FRONT] = Types.Convert(self.type, self.text[FRONT])
         self.cache[MIDDLE] = Types.Convert(self.type, self.text[MIDDLE])
         self.cache[BACK] = self.text[BACK]
+        self.cmpcache[FRONT] = Types.Normalize(self.type, self.text[FRONT])
+        self.cmpcache[MIDDLE] = Types.Normalize(self.type, self.text[MIDDLE])
+        self.cmpcache[BACK] = self.text[BACK]
 
     # Property: type
     def SetType(self, type):
@@ -94,6 +100,10 @@ class Card(object):
     def GetTextRaw(self, side):
         assert side in (FRONT, MIDDLE, BACK)
         return self.text[side]
+
+    def GetTextCmp(self, side):
+        assert side in (FRONT, MIDDLE, BACK)
+        return self.cmpcache[side]
 
     def Upgrade(self, side):
         """ Upgrades card to next 'learned' level.

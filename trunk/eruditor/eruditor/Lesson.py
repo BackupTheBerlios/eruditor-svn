@@ -22,10 +22,13 @@
 #
 # Lesson stuff.
 
+import wx
+
 import os.path
 import xml.dom.minidom
 import datetime
 import random
+import string
 
 import Card
 import Types
@@ -59,8 +62,14 @@ class Lesson(object):
             self.stacks[name] = []
 
         if filename:
-            self.ReadXML()
-            self.SetFocus(BACK)
+            if os.path.exists(filename):
+                self.ReadXML()
+                self.SetFocus(BACK)
+            else:
+                wx.MessageBox(
+                    "Could not open the specified lesson file!", "Error",
+                    wx.OK|wx.CENTRE|wx.ICON_EXCLAMATION)
+                self.filename = None
 
     def WriteXML(self):
         """ Generates the XML for this lesson and writes it to the specified
@@ -348,13 +357,14 @@ class Lesson(object):
         return cmp(c1.section, c2.section)
 
     def _cmp_front(self, c1, c2):
-        return cmp(c1.GetTextRaw(FRONT), c2.GetTextRaw(FRONT))
+        return cmp(c1.GetTextCmp(FRONT), c2.GetTextCmp(FRONT))
 
     def _cmp_middle(self, c1, c2):
-        return cmp(c1.GetTextRaw(MIDDLE), c2.GetTextRaw(MIDDLE))
+        return cmp(c1.GetTextCmp(MIDDLE), c2.GetTextCmp(MIDDLE))
 
     def _cmp_back(self, c1, c2):
-        return cmp(c1.GetTextRaw(BACK), c2.GetTextRaw(BACK))
+        return cmp(string.lower(c1.GetTextRaw(BACK)),
+                string.lower(c2.GetTextRaw(BACK)))
 
     def _cmp_learned(self, c1, c2):
         return cmp(c1.GetLearned(self.focus), c2.GetLearned(self.focus))

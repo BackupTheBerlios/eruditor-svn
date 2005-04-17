@@ -315,3 +315,44 @@ BETACODE_ALT = {
 "w=|" :    (u"\u1ff7", ""),
 
 }
+
+
+# Pattern for string comparisons
+# Assumes string has been put into lowercase first
+BETACODE_CMP = {
+
+"a" : "a",
+"b" : "b",
+"g" : "c",
+"d" : "d",
+"e" : "e",
+"z" : "f",
+"h" : "g",
+"q" : "h",
+"i" : "i",
+"k" : "j",
+"l" : "k",
+"m" : "l",
+"n" : "m",
+"c" : "n",
+"o" : "o",
+"p" : "p",
+"r" : "q",
+"s" : "r",
+"j" : "s",
+"t" : "t",
+"u" : "u",
+"f" : "v",
+"x" : "w",
+"y" : "x",
+"w" : "y",
+")" : "",
+"(" : "",
+"/" : "",
+"\\" : "",
+"=" : "",
+"|" : "",
+"_" : "",
+"+" : "",
+
+}

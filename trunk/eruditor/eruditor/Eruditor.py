@@ -19,15 +19,23 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+import sys
 import wx
 from MainFrame import MainFrame
 import Config
 
 class Eruditor(wx.App):
+    def __init__(self, filename):
+        wx.App.__init__(self)
+        self.filename = filename
+
     def OnInit(self):
-        Config.Initialize()
+        if len(sys.argv) == 2: filename = sys.argv[1]
+        else: filename = None
+        Config.Initialize() # Set up the config module
+
         wx.InitAllImageHandlers()
-        mainFrame = MainFrame(None, -1, "")
+        mainFrame = MainFrame(None, -1, filename=filename)
         self.SetTopWindow(mainFrame)
         mainFrame.Show()
         return 1
@@ -35,5 +43,15 @@ class Eruditor(wx.App):
 # end of class Eruditor
 
 if __name__ == "__main__":
+    if len(sys.argv) > 2:
+        print """Usage: python Eruditor.py [FILE]
+A vocabulary training program.
+
+The optional FILE argument is the lesson to load.
+With no FILE, a blank lesson is loaded.
+
+Report bugs to <alexanderlee@users.berlios.de>."""
+        sys.exit(0)
+
     Eruditor = Eruditor(0)
     Eruditor.MainLoop()

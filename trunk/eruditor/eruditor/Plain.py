@@ -23,9 +23,16 @@
 # Default language support.
 # Raw Unicode text, no applied conversions.
 
+import string
+
 class Convertor(object):
     """ A do-nothing convertor class. """
-
     def Convert(self, text):
         """ Do nothing """
         return text
+
+class Normalizer(object):
+    """ A plain normalizer class. Simply lower-cases the text. """
+    def Convert(self, text): 
+        return string.lower(text)
+

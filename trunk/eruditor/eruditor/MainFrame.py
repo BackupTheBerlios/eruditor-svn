@@ -40,6 +40,13 @@ from Globals import *
 
 class MainFrame(wx.Frame):
     def __init__(self, *args, **kwds):
+        # Figure out initial file to open, if any
+        try:
+            filename = kwds["filename"]
+            del kwds["filename"]
+        except KeyError:
+            filename = None
+
         self.TOOL_NEW = wx.NewId()
         self.TOOL_OPEN = wx.NewId()
         self.TOOL_SAVE = wx.NewId()
@@ -125,14 +132,11 @@ class MainFrame(wx.Frame):
         self.__do_layout()
         # end wxGlade
 
-        #self.lesson = Lesson.Lesson(filename="test.xml")
-        #self.lesson = Lesson.Lesson(filename="sets/mastro_verbs.xml")
-        self.lesson = Lesson.Lesson()
-
+        # Load initial lesson, connect cardList and pilesPanel, etc.
+        self.lesson = Lesson.Lesson(filename)
         self.pilesPanel.SetCardList(self.cardList)
-
+        self._LastDirChanged()
         self._LessonChanged()
-
         self._BindEvents()
 
     def __set_properties(self):
@@ -228,11 +232,13 @@ class MainFrame(wx.Frame):
         self._LessonChanged()
 
     def OnMenuItemOpen(self, event):
-        dlg = wx.FileDialog(self, "Choose a file", ".", "", "*.xml", wx.OPEN)
+        dlg = wx.FileDialog(self, "Choose a file", Config.GetLastDir(),
+                "", "*.xml", wx.OPEN)
         try:
             if dlg.ShowModal() == wx.ID_OK:
                 fullname = dlg.GetPath()
                 self.lesson = Lesson.Lesson(filename=fullname)
+                self._LastDirChanged()
                 self._LessonChanged()
                 self.UpdateStatus("Loaded %s" % self.lesson.GetBaseName())
         finally:
@@ -248,7 +254,8 @@ class MainFrame(wx.Frame):
 
     def OnMenuItemSaveas(self, event):
         # FIXME - if file exists, issue warning!
-        dlg = wx.FileDialog(self, "Save file as", ".", "", "*.xml", wx.SAVE)
+        dlg = wx.FileDialog(self, "Save file as", Config.GetLastDir(),
+                "", "*.xml", wx.SAVE)
         rval = wx.ID_CANCEL
         try:
             rval = dlg.ShowModal()
@@ -256,6 +263,7 @@ class MainFrame(wx.Frame):
                 fullname = dlg.GetPath()
                 self.lesson.filename = fullname
                 self.lesson.WriteXML()
+                self._LastDirChanged()
                 self._LessonChanged()
                 self.UpdateStatus("Saved as %s" % self.lesson.GetBaseName())
         finally:
@@ -433,6 +441,13 @@ class MainFrame(wx.Frame):
         outfile.close()
 
     # Utility methods
+
+    def _LastDirChanged(self):
+        """ Updates the setting for the 'last used directory'. This is helpful
+        when you're opening and saving files """
+
+        dir = self.lesson.GetDirName()
+        if dir: Config.SetLastDir(dir)
 
     def _LessonChanged(self):
         """ Updates GUI elements with Lesson info. Called when lesson

@@ -23,6 +23,7 @@
 # Greek language support.
 
 import re
+import string
 
 from UserDict import UserDict 
 
@@ -40,6 +41,8 @@ with diacritics do not have indications of vowel length, we'll need to append a
 listing these vowels at the end. For instance:
 
     poli_/ths --> πολίτης [ῑ] """
+
+_cmp_table = GreekPatterns.BETACODE_CMP
 
 class Convertor(UserDict):
     """ Convertor from ASCII Beta Code to Unicode Greek text.
@@ -118,6 +121,37 @@ class Convertor(UserDict):
             result += " [%s]" % self.addstr
         return result
 
+class Normalizer(UserDict):
+    """ Convertor from ASCII Beta Code to simple cmp()-arable ASCII. """
+
+    def __init__(self):
+        self.re = None
+        self.regex = None
+
+        # Enter all betacode replacements into this dict
+        UserDict.__init__(self, _cmp_table)
+
+        # Go ahead and compile it
+        self._compile()
+
+    def _compile(self): 
+        """ Builds a regular expression object based on the keys of the
+        dictionary """
+
+        keys = self.keys()
+        tmp = "(%s)" % "|".join(map(re.escape, keys))
+        self.re = tmp
+        self.regex = re.compile(self.re)
+    
+    def __call__(self, mo): 
+        """ Handler for each regex match """
+        matchstr = mo.string[mo.start():mo.end()]
+        return self[matchstr]
+    
+    def Convert(self, text): 
+        """ Translates and returns the modified text """ 
+        return self.regex.sub(self, string.lower(text))
+
 #
 # Test routine
 #
@@ -125,10 +159,12 @@ class Convertor(UserDict):
 if __name__ == "__main__":
     """ Read user input and output Unicode polytonic greek """
     conv = Convertor()
+    norm = Normalizer()
     print "Pseudo-BetaCode demo (enter 'q' to quit)"
     s = ''
     while 1:
         s = raw_input("> ")
         if s == 'q': break
         print conv.Convert(s)
+        print norm.Convert(s)
 

@@ -24,6 +24,7 @@
 # Ok, so we assume all cards are lowercase. But it's Latin, so who cares?
 
 import re
+import string
 
 from UserDict import UserDict 
 
@@ -62,7 +63,7 @@ class Convertor(UserDict):
         
         # Note the first entry -- this lets us specially handle any part that
         # comes between angle brackets. Cf note in __call__.
-        tmp = "(<(.*?)>|%s)" % "|".join(map(re.escape, keys))
+        tmp = "({(.*?)}|%s)" % "|".join(map(re.escape, keys))
         self.re = tmp
         self.regex = re.compile(self.re)
     
@@ -71,7 +72,7 @@ class Convertor(UserDict):
 
         # Grab the matched string, get the related info from the dict.
         matchstr = mo.string[mo.start():mo.end()]
-        if matchstr[0] == '<' and matchstr[-1] == '>':
+        if matchstr[0] == '{' and matchstr[-1] == '}':
             # It's that special case mentioned above in _compile; strip the
             # angle brackets and return the string without changes.
             unichr = matchstr[1:-1]
@@ -87,6 +88,10 @@ class Convertor(UserDict):
         # Process text
         return self.regex.sub(self, text)
 
+class Normalizer(UserDict):
+    def Convert(self, text): 
+        return string.lower(text)
+
 #
 # Test routine
 #
@@ -94,10 +99,12 @@ class Convertor(UserDict):
 if __name__ == "__main__":
     """ Read user input and output Unicode latin """
     conv = Convertor()
+    norm = Normalizer()
     print "Easy-macron demo (enter 'q' to quit)"
     s = ''
     while 1:
         s = raw_input("> ")
         if s == 'q': break
         print conv.Convert(s)
+        print norm.Convert(s)
 
