@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+# File: $Id$
+# Author: Alexander Lee
+#
 # Eruditor (ērudītor), a card-based vocabulary training program
 # Copyright (C) 2005 Alexander Lee
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation.
 # 
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,15 +18,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# File: PilesPanel.py
-# Author: Alexander Lee
-#
-# Based on the "Doodle" example at Koders.com
-#
-# Terminology is a bit confusing:
-# - A stack is a list of Card objects
-# - A pile is the visualization of a stack
+
+"""
+This module provides visualization support stacks of cards. This way the user
+can quickly see how cards are distributed.
+
+First a note on terminology:
+- A *stack* is a list of Card objects
+- A *pile* is the visualization of a stack
+
+This module defines the following:
+
+:Classes:
+    - `PilesPanel`: Shows all piles.
+    - `Pile`: Superclass for your basic pile in the `PilesPanel`.
+    - `SummaryPile`: Used to displays any and all cards
+    - `UnlearnedPile`: Used for unlearned cards
+    - `ShortTermPile`: Used for cards in short-term memory
+    - `LearnedPile`: Used for cars that have been learned
+
+This module was written with help from the "Doodle" example at Koders.com (for
+graphics routines).
+"""
 
 import wx
 

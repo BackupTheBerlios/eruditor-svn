@@ -262,13 +262,6 @@ Import
 1. Pauker XML file format
 2. Text file (tab-delim, CSV, etc)
 
-Preferences
------------
-
-1. Default lesson type
-2. Font selection
-3. Working directories
-
 -----------------------------------------------------------------------
 
 Help Wanted
@@ -311,8 +304,9 @@ LATIN
 	  title; will look into this)
 
 GERMAN
-	- Jannach & Korb's *German for Reading Knowledge*. I need to take my
-	  reading exam soon, so I'm definitely working on this.
+	- April Wilson's *German Quickly*. I've already done Appendix B,
+	  "Important Words". I think it will be worth it to do Appendix K,
+	  "General and Humanities Vocabulary", also.
 
 If anyone's willing to work on these, please email me. I'll post contact
 info here so people can collaborate on the various lessons.  Ideas about
@@ -354,8 +348,7 @@ Licensing
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation; either version 2 of the License, or
-	(at your option) any later version.
+	the Free Software Foundation.
 	
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of

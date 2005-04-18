@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+# File: $Id$
+# Author: Alexander Lee
+#
 # Eruditor (ērudītor), a card-based vocabulary training program
 # Copyright (C) 2005 Alexander Lee
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# the Free Software Foundation.
 # 
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,12 +18,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# File: Types.py
-# Author: Alexander Lee
-#
-# Module to handle all card types. Each type has an associated Convertor
-# class, which handles the text->unicode convertion for that type.
+
+"""
+This module acts as a registry for card types. A card type describes a
+particular language or category of cards, and how to handle any text
+conversions for it.
+
+Each type must implement two classes:
+1. a `Convertor` for producing pretty unicode from the raw textdoing text
+2. a `Normalizer` for producing text that can be used by cmp() (for sorting).
+
+See `Greek.py` and `Latin.py` for examples.
+"""
 
 _default = None
 """ The name of the default type """
