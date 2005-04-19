@@ -6,12 +6,10 @@ A vocabulary training tool
 --------------------------
 
 :Author: Alexander Lee <alexlee (at) uchicago (dot) edu>
-:Version: 0.1
-:Date: 20050328
+:Version: $Rev$
+:Date: $Date$
 
-
-**Contents:** `Introduction`_ | `How it works`_ | `Getting started`_ |
-`Todo List`_ | `Help Wanted`_ | `For Developers`_ | `Licensing`_
+.. contents::
 
 Introduction
 ============
@@ -32,8 +30,6 @@ License. See the licensing_ section for more information.
 Here are some screenshots_.
 
 .. _screenshots: shots.html
-
------------------------------------------------------------------------
 
 How it works
 ============
@@ -113,7 +109,7 @@ learning. It's just a matter of people programming the support. See the
 
 	*Tip* The character translations (such as with Greek and Latin) are
 	applied to the front and middle of cards, but not the backs. In the
-	text for the front or middle, text between <angle brackets> doesn't
+	text for the front or middle, text between {curly braces} doesn't
 	get processed.
 
 Learning process
@@ -138,8 +134,6 @@ student can learn such important bits as:
 1. for *nouns*: gen sg, gender
 2. for *adjectives*: gender endings for two or three termination
 3. for *verbs*: principle parts
-
------------------------------------------------------------------------
 
 Getting started
 ===============
@@ -180,7 +174,9 @@ Installation
 Ubuntu and Debian
 `````````````````
 
-``apt-get install libwxgtk2.5.3-python python-reportlab``
+::
+
+	apt-get install libwxgtk2.5.3-python python-reportlab
 
 Unpack ``eruditor-X.X.tar.gz`` into an appropriate place (in your home
 folder, or in ``/usr/local``), then run ``python Eruditor.py``.
@@ -237,8 +233,6 @@ Unpack ``eruditor-X.X.zip`` into an appropriate place (such as
 ``C:\Program Files\``, or your home folder, or your desktop), then
 double-click on ``Eruditor.py``.
 
------------------------------------------------------------------------
-
 Todo List
 =========
 
@@ -261,8 +255,6 @@ Import
 
 1. Pauker XML file format
 2. Text file (tab-delim, CSV, etc)
-
------------------------------------------------------------------------
 
 Help Wanted
 ===========
@@ -313,11 +305,8 @@ info here so people can collaborate on the various lessons.  Ideas about
 efficient importing methods would be nice, too. I'm planning to at least
 have importing of tab-delimited and CSV files – eventually.
 
-*In a more ideal world these lists would also take into account vowel
-length. So to anyone putting together lessons out there: if you can mark
-the long vowels, please do so!*
-
------------------------------------------------------------------------
+*Ideally, these lists would also take into account vowel length. So if
+you are putting together lessons, please try to mark them!*
 
 For Developers
 ==============
@@ -339,8 +328,6 @@ Also, check out the `berliOS project page`_.
 
 .. _berliOS project page: http://developer.berlios.de/projects/eruditor/
 
------------------------------------------------------------------------
-
 Licensing
 =========
 
@@ -361,7 +348,7 @@ Licensing
 
 .. _GPL: http://www.fsf.org/
 
------------------------------------------------------------------------
+----------
 
 ©2005 Alexander Lee ~ `valid XHTML`_ ~ `valid CSS`_
 

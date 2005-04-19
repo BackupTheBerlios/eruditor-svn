@@ -1,2 +1,2 @@
 #!/bin/sh
-rest2html index.txt index.html
+rest2html index.rst index.html

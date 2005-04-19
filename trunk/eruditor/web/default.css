@@ -5,12 +5,15 @@ body {
 	margin: 0 10%;
 	}
 
+a {
+	text-decoration: none;
+	}
 a:link {
-	color: #00c;
+	color: #006;
 	background-color: transparent;
 	}
 a:visited {
-	color: #00c;
+	color: #006;
 	background-color: transparent;
 	}
 a:active {
@@ -22,11 +25,27 @@ a:hover {
 	background-color: transparent;
 	}
 
+a.toc-backref {
+	text-decoration: none;
+	color: #000;
+	}
+a.toc-backref:hover {
+	background-color: inherit;
+	}
+
+h1, h2, h3 {
+	/*font-family: arial, sans-serif;*/
+	font-weight: bold;
+	color: #000;
+	background-color: transparent;
+	}
 h1 {
 	font-size: 180%;
+	background-color: #ddd;
+	border: medium solid black;
+	padding: 5px;
 	}
 h1.title {
-	font-family: times new roman, times, serif;
 	font-size: 200%;
 	text-align: center;
 	margin: 1em 0 0;
@@ -35,19 +54,14 @@ h2 {
 	font-size: 150%;
 	}
 h2.subtitle {
+	font-family: times new roman, times, serif;
 	font-size: 150%;
 	font-style: italic;
 	text-align: center;
-	margin: 0 0 1em;
+	margin: 0.5em 0 1em;
 	}
 h3 {
 	font-size: 120%;
-	}
-h1, h2, h3 {
-	font-family: times new roman, times, serif;
-	font-weight: bold;
-	color: #000;
-	background-color: transparent;
 	}
 
 th.docinfo-name {
@@ -66,3 +80,14 @@ img {
 	text-align: center;
 	}
 
+code, tt {
+	color: #060;
+	}
+
+pre.literal-block {
+	margin-left: 2em;
+	margin-right: 2em;
+	background-color: #eeeeee;
+	border: thin black solid;
+	padding: 5px;
+	}
