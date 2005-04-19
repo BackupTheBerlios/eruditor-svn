@@ -34,6 +34,9 @@ _weights = (wx.NORMAL, wx.LIGHT, wx.BOLD)
 _min_size = 1
 _max_size = 72
 
+TEXT = "text"
+LIST = "list"
+
 def Initialize():
     global config
     if config:
@@ -43,40 +46,59 @@ def Initialize():
     config = wx.Config("eruditor")
 
     # Font settings
-    face = config.Read("/font/face", defaultVal="Times New Roman")
-    style = config.ReadInt("/font/style", defaultVal=wx.NORMAL)
-    weight = config.ReadInt("/font/weight", defaultVal=wx.NORMAL)
-    size = config.ReadInt("/font/size", defaultVal=12)
 
-    if not (style and style in _styles):
-        config.WriteInt("/font/style", wx.NORMAL)
-    if not (weight and weight in _weights):
-        config.WriteInt("/font/weight", wx.NORMAL)
-    if not (size >= _min_size and size <= _max_size):
-        config.WriteInt("/font/size", 12)
+    for type in [TEXT, LIST]:
+        face = config.Read("/%sfont/face"%type, defaultVal="Times New Roman")
+        style = config.ReadInt("/%sfont/style"%type, defaultVal=wx.NORMAL)
+        weight = config.ReadInt("/%sfont/weight"%type, defaultVal=wx.NORMAL)
+        size = config.ReadInt("/%sfont/size"%type, defaultVal=12)
 
-def SetFont(face, style, weight, size):
+        if not (style and style in _styles): style = wx.NORMAL
+        if not (weight and weight in _weights): weight = wx.NORMAL
+        if not (size >= _min_size and size <= _max_size): size = 12
+
+        config.Write("/%sfont/face"%type, face)
+        config.WriteInt("/%sfont/style"%type, style)
+        config.WriteInt("/%sfont/weight"%type, weight)
+        config.WriteInt("/%sfont/size"%type, size)
+
+    config.Flush()
+
+def _SetFont(type, face, style, weight, size):
     assert style in _styles
     assert weight in _weights
     assert size >= _min_size and size <= _max_size
 
-    config.Write("/font/face", face)
-    config.WriteInt("/font/style", style)
-    config.WriteInt("/font/weight", weight)
-    config.WriteInt("/font/size", size)
+    config.Write("/%sfont/face"%type, face)
+    config.WriteInt("/%sfont/style"%type, style)
+    config.WriteInt("/%sfont/weight"%type, weight)
+    config.WriteInt("/%sfont/size"%type, size)
 
-def GetFont():
+def _GetFont(type):
     font = wx.Font(
-            config.ReadInt("/font/size"),
+            config.ReadInt("/%sfont/size"%type),
             wx.TELETYPE,
-            config.ReadInt("/font/style"),
-            config.ReadInt("/font/weight"),
+            config.ReadInt("/%sfont/style"%type),
+            config.ReadInt("/%sfont/weight"%type),
             False,
-            config.Read("/font/face"))
+            config.Read("/%sfont/face"%type))
     return font
+
+def SetTextFont(face, style, weight,size):
+    _SetFont(TEXT, face, style, weight, size)
+
+def GetTextFont():
+    return _GetFont(TEXT)
+
+def SetListFont(face, style, weight,size):
+    _SetFont(LIST, face, style, weight, size)
+
+def GetListFont():
+    return _GetFont(LIST)
 
 def SetLastDir(dir):
     if os.path.exists(dir):
+        dir = os.path.abspath(dir)
         config.Write("/file/lastdir", dir)
 
 def GetLastDir():

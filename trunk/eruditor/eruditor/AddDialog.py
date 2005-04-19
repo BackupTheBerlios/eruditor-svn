@@ -55,7 +55,7 @@ class AddDialog(wx.Dialog):
         self.__do_layout()
         # end wxGlade
 
-        font = Config.GetFont()
+        font = Config.GetTextFont()
         self.textFront.SetFont(font)
         self.textMiddle.SetFont(font)
         self.textBack.SetFont(font)
@@ -73,6 +73,7 @@ class AddDialog(wx.Dialog):
         self.labelBack.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.textBack.SetSize((300,60))
         self.labelSection.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        self.textSection.SetSize((300, 30))
         self.buttonAdd.SetDefault()
         # end wxGlade
 
@@ -81,13 +82,13 @@ class AddDialog(wx.Dialog):
         sizerCardAdd = wx.BoxSizer(wx.VERTICAL)
         sizerButtons = wx.BoxSizer(wx.HORIZONTAL)
         sizerCardAdd.Add(self.labelFront, 0, wx.LEFT|wx.TOP|wx.FIXED_MINSIZE, 5)
-        sizerCardAdd.Add(self.textFront, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardAdd.Add(self.textFront, 2, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerCardAdd.Add(self.labelMiddle, 0, wx.LEFT|wx.FIXED_MINSIZE, 5)
-        sizerCardAdd.Add(self.textMiddle, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardAdd.Add(self.textMiddle, 2, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerCardAdd.Add(self.labelBack, 0, wx.LEFT|wx.FIXED_MINSIZE, 5)
-        sizerCardAdd.Add(self.textBack, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardAdd.Add(self.textBack, 2, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerCardAdd.Add(self.labelSection, 0, wx.LEFT|wx.FIXED_MINSIZE, 5)
-        sizerCardAdd.Add(self.textSection, 0, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardAdd.Add(self.textSection, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add((20, 20), 1, wx.FIXED_MINSIZE, 0)
         sizerButtons.Add(self.buttonAdd, 0, wx.ALL|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add(self.buttonClose, 0, wx.ALL|wx.FIXED_MINSIZE, 5)

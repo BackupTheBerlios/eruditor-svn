@@ -36,7 +36,7 @@ class EditDialog(wx.Dialog):
         del kwds["card"]
 
         # begin wxGlade: EditDialog.__init__
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE
+        kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
         self.labelFront = wx.StaticText(self, -1, "Front")
         self.textFront = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE)
@@ -53,7 +53,7 @@ class EditDialog(wx.Dialog):
         self.__do_layout()
         # end wxGlade
 
-        font = Config.GetFont()
+        font = Config.GetTextFont()
         self.textFront.SetFont(font)
         self.textMiddle.SetFont(font)
         self.textBack.SetFont(font)
@@ -72,6 +72,7 @@ class EditDialog(wx.Dialog):
         self.labelBack.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.textBack.SetSize((300,60))
         self.labelSection.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        self.textSection.SetSize((300, 30))
         self.buttonOk.SetDefault()
         # end wxGlade
 
@@ -80,13 +81,13 @@ class EditDialog(wx.Dialog):
         sizerCardEdit = wx.BoxSizer(wx.VERTICAL)
         sizerButtons = wx.BoxSizer(wx.HORIZONTAL)
         sizerCardEdit.Add(self.labelFront, 0, wx.LEFT|wx.TOP|wx.FIXED_MINSIZE, 5)
-        sizerCardEdit.Add(self.textFront, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardEdit.Add(self.textFront, 2, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerCardEdit.Add(self.labelMiddle, 0, wx.LEFT|wx.FIXED_MINSIZE, 5)
-        sizerCardEdit.Add(self.textMiddle, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardEdit.Add(self.textMiddle, 2, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerCardEdit.Add(self.labelBack, 0, wx.LEFT|wx.FIXED_MINSIZE, 5)
-        sizerCardEdit.Add(self.textBack, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardEdit.Add(self.textBack, 2, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerCardEdit.Add(self.labelSection, 0, wx.LEFT|wx.EXPAND|wx.FIXED_MINSIZE, 5)
-        sizerCardEdit.Add(self.textSection, 0, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
+        sizerCardEdit.Add(self.textSection, 1, wx.ALL|wx.EXPAND|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add((20, 20), 1, wx.FIXED_MINSIZE, 0)
         sizerButtons.Add(self.buttonOk, 0, wx.ALL|wx.FIXED_MINSIZE, 5)
         sizerButtons.Add(self.buttonCancel, 0, wx.ALL|wx.FIXED_MINSIZE, 5)

@@ -41,7 +41,7 @@ _zero = datetime.timedelta()
 class TrainerDialog(wx.Dialog):
     def __init__(self, *args, **kwds):
         # begin wxGlade: TrainerDialog.__init__
-        kwds["style"] = wx.DEFAULT_DIALOG_STYLE
+        kwds["style"] = wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER|wx.THICK_FRAME
         wx.Dialog.__init__(self, *args, **kwds)
         self.labelMessage = wx.StaticText(self, -1, "MESSAGE")
         self.textFront = wx.TextCtrl(self, -1, "", style=wx.TE_MULTILINE|wx.TE_READONLY)
@@ -59,7 +59,7 @@ class TrainerDialog(wx.Dialog):
         self.__do_layout()
         # end wxGlade
 
-        font = Config.GetFont()
+        font = Config.GetTextFont()
         self.textFront.SetFont(font)
         self.textMiddle.SetFont(font)
         self.textBack.SetFont(font)

@@ -26,6 +26,7 @@ import os.path
 import Config
 import AboutDialog
 import PropertiesDialog
+import PreferencesDialog
 import TrainerDialog
 import AddDialog
 import PilesPanel
@@ -338,19 +339,11 @@ class MainFrame(wx.Frame):
             dlg.Destroy()
 
     def OnMenuItemPrefs(self, event):
-        # FIXME currently only does font selection
-        fdata = wx.FontData()
-        fdata.SetInitialFont(Config.GetFont())
-        dlg = wx.FontDialog(self, fdata)
+        dlg = PreferencesDialog.PreferencesDialog(self)
         try:
-            if dlg.ShowModal() == wx.ID_OK:
-                fdata = dlg.GetFontData()
-                font = fdata.GetChosenFont()
-                Config.SetFont(font.GetFaceName(),
-                        font.GetStyle(),
-                        font.GetWeight(),
-                        font.GetPointSize())
-                self.cardList.SetFont(Config.GetFont())
+            dlg.ShowModal()
+            self.cardList.SetFont(Config.GetListFont())
+            # And push other pref changes...
         finally:
             dlg.Destroy()
 

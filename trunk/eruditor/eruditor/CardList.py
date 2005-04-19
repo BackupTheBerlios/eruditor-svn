@@ -83,7 +83,7 @@ class CardList(wx.ListCtrl):
         self.__lrn_attr.SetBackgroundColour(green)
         self.__exp_attr.SetBackgroundColour(blue)
 
-        self.SetFont(Config.GetFont())
+        self.SetFont(Config.GetListFont())
 
         # Events
 
