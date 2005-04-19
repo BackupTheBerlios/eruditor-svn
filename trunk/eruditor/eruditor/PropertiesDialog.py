@@ -21,7 +21,7 @@
 
 import wx
 
-import Types
+import Languages
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -101,8 +101,8 @@ class PropertiesDialog(wx.Dialog):
         self.textNotes.SetValue(self.lesson.notes)
 
         # Fill the list of types
-        types = Types.TypesList()
-        self.typeListBox.InsertItems(Types.TypesList(), 0)
+        types = Languages.TypesList()
+        self.typeListBox.InsertItems(Languages.TypesList(), 0)
 
         # Set the selection for this lesson's type
         for i in range(len(types)):

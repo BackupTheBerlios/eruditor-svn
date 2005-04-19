@@ -31,8 +31,6 @@ import TrainerDialog
 import AddDialog
 import PilesPanel
 import CardList
-
-import Types
 import Lesson
 
 from Globals import *

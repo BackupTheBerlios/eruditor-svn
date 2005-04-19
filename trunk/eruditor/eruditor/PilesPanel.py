@@ -93,6 +93,7 @@ class PilesPanel(wx.Panel):
         self.activePile = event.GetEventObject()
         self.activePile.SetActive(True) # and activate the new pile
         self.list.stackname = self.activePile.label
+	self.list.Refresh()
 
     def SetCardList(self, list):
         self.list = list

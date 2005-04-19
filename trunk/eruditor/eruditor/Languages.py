@@ -31,6 +31,8 @@ Each type must implement two classes:
 See `Greek.py` and `Latin.py` for examples.
 """
 
+import Plain, Greek, Latin
+
 _default = None
 """ The name of the default type """
 _types = {}

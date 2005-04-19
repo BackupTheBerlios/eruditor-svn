@@ -26,7 +26,7 @@ See `Config.py` for user-configurable settings.
 """
 
 import datetime
-import Types
+import Languages
 
 # Main
 
@@ -35,7 +35,7 @@ APPNAME = u"ērudītor"
 # Lesson
 
 DEFAULT_TITLE = "Unnamed Lesson"
-DEFAULT_TYPE = Types.DefaultType()
+DEFAULT_TYPE = Languages.DefaultType()
 
 TIMES = [ 2, 4, 7, 12, 20 ]
 """ The number of days to wait before expiring cards in each long-term pile

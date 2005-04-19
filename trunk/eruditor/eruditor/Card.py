@@ -29,7 +29,7 @@ kind of sucks.
 
 import datetime
 
-import Types
+import Languages
 
 from Globals import *
 
@@ -73,11 +73,11 @@ class Card(object):
 
     def _GenCache(self):
         """ (re)Generates cached text values """
-        self.cache[FRONT] = Types.Convert(self.type, self.text[FRONT])
-        self.cache[MIDDLE] = Types.Convert(self.type, self.text[MIDDLE])
+        self.cache[FRONT] = Languages.Convert(self.type, self.text[FRONT])
+        self.cache[MIDDLE] = Languages.Convert(self.type, self.text[MIDDLE])
         self.cache[BACK] = self.text[BACK]
-        self.cmpcache[FRONT] = Types.Normalize(self.type, self.text[FRONT])
-        self.cmpcache[MIDDLE] = Types.Normalize(self.type, self.text[MIDDLE])
+        self.cmpcache[FRONT] = Languages.Normalize(self.type, self.text[FRONT])
+        self.cmpcache[MIDDLE] = Languages.Normalize(self.type, self.text[MIDDLE])
         self.cmpcache[BACK] = self.text[BACK]
 
     # Property: type
@@ -93,7 +93,7 @@ class Card(object):
         assert side in (FRONT, MIDDLE, BACK)
         self.text[side] = text
         if side == BACK: self.cache[side] = text
-        else: self.cache[side] = Types.Convert(self.type, text)
+        else: self.cache[side] = Languages.Convert(self.type, text)
 
     def GetText(self, side):
         assert side in (FRONT, MIDDLE, BACK)

@@ -32,7 +32,7 @@ import random
 import string
 
 import Card
-import Types
+import Languages
 
 from Globals import *
 
